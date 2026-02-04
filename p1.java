@@ -1,6 +1,5 @@
 class Solution {
     public int getMinDiff(int[] arr, int k) {
-        // code here
         int n = arr.length;
         if (n == 1) return 0;
 
@@ -8,20 +7,17 @@ class Solution {
 
         int ans = arr[n - 1] - arr[0];
 
-        int smallest = arr[0] + k;
-        int largest = arr[n - 1] - k;
-
         for (int i = 0; i < n - 1; i++) {
-            int minH = Math.min(smallest, arr[i + 1] - k);
-            
-        
-            int maxH = Math.max(largest, arr[i] + k);
+            int leftTall = arr[i] + k;
+            int rightShort = arr[i + 1] - k;
+            if (rightShort < 0) continue;
+            int maxH = (arr[n - 1] - k > leftTall) ? arr[n - 1] - k : leftTall;
+            int minH = (arr[0] + k < rightShort) ? arr[0] + k : rightShort;
 
-           
-            if (minH < 0) continue;
-
-            
-            ans = Math.min(ans, maxH - minH);
+            int currentDiff = maxH - minH;
+            if (currentDiff < ans) {
+                ans = currentDiff;
+            }
         }
 
         return ans;
